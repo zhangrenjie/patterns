@@ -24,13 +24,18 @@ use \SplObserver;
 
 class User implements SplSubject
 {
-    private $observers = [];
+    private $observers = null;
 
     public $userName;
     public $email;
 
     public $title;
     public $content;
+
+    public function __construct()
+    {
+        $this->observers = new \SplObjectStorage();
+    }
 
     /**
      * 增加观察者
@@ -39,8 +44,11 @@ class User implements SplSubject
      */
     public function attach(SplObserver $observer)
     {
-        if (array_search($observer, $this->observers, true) === false) {
-            $this->observers[] = $observer;
+//        if (array_search($observer, $this->observers, true) === false) {
+//            $this->observers[] = $observer;
+//        }
+        if (!$this->observers->contains($observer)) {
+            $this->observers->attach($observer);
         }
         return $this;
     }
@@ -52,8 +60,11 @@ class User implements SplSubject
      */
     public function detach(SplObserver $observer)
     {
-        if ($key = array_search($observer, $this->observers, true) !== false) {
-            unset($this->observers[$key]);
+//        if ($key = array_search($observer, $this->observers, true) !== false) {
+//            unset($this->observers[$key]);
+//        }
+        if ($this->observers->contains($observer)) {
+            $this->observers->detach($observer);
         }
         return $this;
     }
@@ -63,9 +74,18 @@ class User implements SplSubject
      */
     public function notify()
     {
-        if (!empty($this->observers)) {
-            foreach ($this->observers as $observer) {
+//        if (!empty($this->observers)) {
+//            foreach ($this->observers as $observer) {
+//                $observer->update($this);
+//            }
+//        }
+
+        if (count($this->observers)) {
+            $this->observers->rewind();
+            while ($this->observers->valid()) {
+                $observer = $this->observers->current();
                 $observer->update($this);
+                $this->observers->next();
             }
         }
     }

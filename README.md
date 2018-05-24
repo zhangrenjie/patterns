@@ -4,6 +4,7 @@
 #### [观察者模式(原生)](https://github.com/zhangrenjie/patterns/tree/master/observer)
 #### [观察者模式(SPL)](https://github.com/zhangrenjie/patterns/tree/master/spl_observer)
 #### [责任链模式](https://github.com/zhangrenjie/patterns/tree/master/ChainOfResponsibilities)
+#### [访问者模式](https://github.com/zhangrenjie/patterns/tree/master/Vistor)
 
 
 ### SPL

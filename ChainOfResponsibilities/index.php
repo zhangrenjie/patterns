@@ -39,7 +39,6 @@ abstract class Manager
         $this->superior = $manager;
     }
 
-
     abstract public function verifyApply(Apply $apply);
 }
 
